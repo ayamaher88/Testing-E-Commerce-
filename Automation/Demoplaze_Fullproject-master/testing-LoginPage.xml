@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Login Tests Suite">
+    <test name="LoginPage Tests" >
+        <classes>
+            <class name="tests.LoginPageTestCase1"/>
+            <class name="tests.LoginPageTestCase2"/>
+            <class name="tests.LoginPageTestCase3"/>
+            <class name="tests.LoginPageTestCase4"/>
+            <class name="tests.LoginPageTestCase5"/>
+            <class name="tests.LoginPageTestCase6"/>
+            <class name="tests.LoginPageTestCase7"/>
+            <class name="tests.LoginPageTestCase8"/>
+
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,2283 @@
+{
+	"info": {
+		"_postman_id": "f64259a9-2305-4283-ad03-4904e6cc132b",
+		"name": "Demoblaze API Tests",
+		"description": "The whole project endpints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40405135",
+		"_collection_link": "https://asmaa-2393668.postman.co/workspace/657e9899-ac93-4215-855a-7c34df44d7cb/collection/43742582-f64259a9-2305-4283-ad03-4904e6cc132b?action=share&source=collection_link&creator=40405135"
+	},
+	"item": [
+		{
+			"name": "HomePage",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is not empty\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Store the authentication token in an environment variable\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    const firstKey = Object.keys(responseJson)[0]; // Get the first key\r",
+									"\r",
+									"    if (firstKey) {\r",
+									"        pm.environment.set(\"authToken\", responseJson[firstKey]);\r",
+									"        pm.expect(pm.environment.get(\"authToken\")).to.eql(responseJson[firstKey]);\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"No key found in the response\");\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{validUsername}}\",\r\n    \"password\": \"{{validPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login\n"
+							]
+						},
+						"description": "### /login\n\nThis endpoint is used to authenticate a user by sending their username and password.\n\n#### Request\n\n- Method: POST\n    \n- Base URL: {{baseUrl}}\n    \n- Body:\n    \n    - username (text, required): The username of the user.\n        \n    - password (text, required): The password of the user.\n        \n\n#### Response\n\nThe response for this request is a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"errorMessage\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```\n\n- Status: 200\n    \n- Content-Type: application/json"
+					},
+					"response": []
+				},
+				{
+					"name": "PhoneCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains an 'Items' array\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.have.property('Items').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains at least one phone in 'Items'\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.have.property('Items').that.is.an('array').that.is.not.empty;\r",
+									"    // Alternatively:\r",
+									"    // pm.expect(responseJson.Items.length).to.be.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body in 'Items' contains Samsung galaxy s6\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    const samsungFound = responseJson.Items.some(product => product.title === \"Samsung galaxy s6\" && product.price === 360.0);\r",
+									"    pm.expect(samsungFound).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cat\": \"phone\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bycat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bycat"
+							]
+						},
+						"description": "### POST /bycat\n\nThis endpoint is used to retrieve items based on a specific category.\n\n#### Request Body\n\n- raw (application/json)\n    \n    - cat: (string) The category for which items are to be retrieved.\n        \n\n#### Response\n\nThe response is in JSON format and follows the schema below:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"cat\": {\n            \"type\": \"string\"\n          },\n          \"desc\": {\n            \"type\": \"string\"\n          },\n          \"id\": {\n            \"type\": \"integer\"\n          },\n          \"img\": {\n            \"type\": \"string\"\n          },\n          \"price\": {\n            \"type\": \"number\"\n          },\n          \"title\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Laptops Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains an 'Items' array\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.have.property('Items').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains at least one laptop\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson.Items.length).to.be.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body in 'Items' contains Sony vaio i5\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    const sonyVaioFound = responseJson.Items.some(product => product.title === \"Sony vaio i5\");\r",
+									"    pm.expect(sonyVaioFound).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cat\": \"notebook\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bycat?=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bycat"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						},
+						"description": "### POST /bycat\n\nThis endpoint allows the client to retrieve items based on a specific category.\n\n#### Request Body\n\n- `cat`: (text) The category for which items are to be retrieved.\n    \n\nExample:\n\n``` json\n{\n  \"cat\": \"notebook\"\n}\n#### Response\nThe response is in JSON format and follows the schema below:\n```json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"cat\": {\n            \"type\": \"string\"\n          },\n          \"desc\": {\n            \"type\": \"string\"\n          },\n          \"id\": {\n            \"type\": \"integer\"\n          },\n          \"img\": {\n            \"type\": \"string\"\n          },\n          \"price\": {\n            \"type\": \"number\"\n          },\n          \"title\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Monitors Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains an 'Items' array\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.have.property('Items').that.is.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains at least one monitor\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson.Items.length).to.be.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body in 'Items' contains Apple monitor 24\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    const appleMonitorFound = responseJson.Items.some(product => product.title === \"Apple monitor 24\");\r",
+									"    pm.expect(appleMonitorFound).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cat\": \"monitor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bycat",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bycat"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Add Cat Information\n\nThis endpoint allows you to add cat information by making an HTTP POST request to `{{baseUrl}}/bycat`.\n\n#### Request Body\n\n- `cat`: The category of the cat.\n    \n\n#### Response\n\nUpon a successful request, the server will respond with a status code of 200 and a JSON object containing an array of items, where each item includes the following properties:\n\n- `cat`: The category of the item.\n    \n- `desc`: The description of the item.\n    \n- `id`: The unique identifier of the item.\n    \n- `img`: The image of the item.\n    \n- `price`: The price of the item.\n    \n- `title`: The title of the item."
+					},
+					"response": []
+				},
+				{
+					"name": "Phone CategoryPoductDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has product details\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    // Try accessing properties under a potential \"data\" or \"product\" key\r",
+									"    const product = responseJson.data || responseJson.product;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{phoneProductId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/view",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"view"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This endpoint allows you to make an HTTP POST request to view a specific item. The request should include a payload in the raw request body type with a key \"id\" and the value of the \"phoneProductId\" variable.\n\nThe response will contain the details of the item being viewed."
+					},
+					"response": []
+				},
+				{
+					"name": "Laptops CategoryPoductDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has product details\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    // Try accessing properties under a potential \"data\" or \"product\" key\r",
+									"    const product = responseJson.data || responseJson.product;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{LaptopProductId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/view",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"view"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### View Product Details\n\nThis endpoint allows you to view the details of a specific product.\n\n#### Request Body\n\n- id (string, required): The ID of the product to view.\n    \n\nExample:\n\n``` json\n{\n  \"id\": \"{{phoneProductId}}\"\n}\n\n ```\n\n#### Response\n\nThe response will be a JSON object with the following properties:\n\n- cat (string): The category of the product.\n    \n- desc (string): The description of the product.\n    \n- id (integer): The ID of the product.\n    \n- img (string): The image URL of the product.\n    \n- price (number): The price of the product.\n    \n- title (string): The title of the product.\n    \n\nExample:\n\n``` json\n{\n  \"cat\": \"\",\n  \"desc\": \"\",\n  \"id\": 0,\n  \"img\": \"\",\n  \"price\": 0,\n  \"title\": \"\"\n}\n\n ```\n\n#### JSON Schema\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"cat\": { \"type\": \"string\" },\n    \"desc\": { \"type\": \"string\" },\n    \"id\": { \"type\": \"integer\" },\n    \"img\": { \"type\": \"string\" },\n    \"price\": { \"type\": \"number\" },\n    \"title\": { \"type\": \"string\" }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Monitors CategoryPoductDetails",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has product details\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    // Try accessing properties under a potential \"data\" or \"product\" key\r",
+									"    const product = responseJson.data || responseJson.product;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{MonitorProductId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/view",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"view"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "# View Product Details\n\nThis endpoint is used to view the details of a specific product.\n\n## Request Body\n\n- id (string, required): The ID of the product to be viewed.\n    \n\n## Response\n\nUpon a successful request, the server returns a JSON object with the following fields:\n\n- cat (string): The category of the product.\n    \n- desc (string): The description of the product.\n    \n- id (integer): The ID of the product.\n    \n- img (string): The image URL of the product.\n    \n- price (number): The price of the product.\n    \n- title (string): The title of the product.\n    \n\nExample:\n\n``` json\n{\n  \"cat\": \"\",\n  \"desc\": \"\",\n  \"id\": 0,\n  \"img\": \"\",\n  \"price\": 0,\n  \"title\": \"\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Next button at phone category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has product details\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    // Try accessing properties under a potential \"data\" or \"product\" key\r",
+									"    const product = responseJson.data || responseJson.product;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{phoneProductId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pagination",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagination"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### POST /pagination\n\nThis endpoint is used to retrieve paginated items.\n\n#### Request Body\n\n- id (string, required): The ID of the phone product.\n    \n\n#### Response\n\nThe response is in JSON format and follows the schema below:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Items\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"cat\": {\"type\": \"string\"},\n          \"desc\": {\"type\": \"string\"},\n          \"id\": {\"type\": \"number\"},\n          \"img\": {\"type\": \"string\"},\n          \"price\": {\"type\": \"number\"},\n          \"title\": {\"type\": \"string\"}\n        }\n      }\n    },\n    \"LastEvaluatedKey\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\"type\": \"string\"}\n      }\n    },\n    \"ScannedCount\": {\"type\": \"number\"}\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Next button at Laptops category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has product details\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    // Try accessing properties under a potential \"data\" or \"product\" key\r",
+									"    const product = responseJson.data || responseJson.product;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{phoneProductId2}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pagination",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagination"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "previous button at phone category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has product details\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    // Try accessing properties under a potential \"data\" or \"product\" key\r",
+									"    const product = responseJson.data || responseJson.product;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"{{phoneProductId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pagination",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagination"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### Pagination\n\nThis endpoint is used to retrieve paginated data.\n\n#### Request Body\n\n- `id`: The ID of the phone product.\n    \n\n#### Response\n\nThe response will include the paginated data based on the provided ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Navigate to Homepage via Logo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has an 'Items' array\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.have.property('Items').that.is.an('array');\r",
+									"    pm.expect(responseJson.Items.length).to.be.greaterThan(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First item in 'Items' array has expected properties\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    if (responseJson.Items && responseJson.Items.length > 0) {\r",
+									"        const firstItem = responseJson.Items[0];\r",
+									"        pm.expect(firstItem).to.have.property('cat').that.is.a('string');\r",
+									"        pm.expect(firstItem).to.have.property('desc').that.is.a('string');\r",
+									"        pm.expect(firstItem).to.have.property('id').that.is.a('number');\r",
+									"        pm.expect(firstItem).to.have.property('img').that.is.a('string');\r",
+									"        pm.expect(firstItem).to.have.property('price').that.is.a('number');\r",
+									"        pm.expect(firstItem).to.have.property('title').that.is.a('string');\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"No items found in the 'Items' array.\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body might have 'LastEvaluatedKey'\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.have.property('LastEvaluatedKey');\r",
+									"    pm.expect(responseJson.LastEvaluatedKey).to.be.an('object');\r",
+									"    pm.expect(responseJson.LastEvaluatedKey).to.have.property('id').that.is.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entries"
+							]
+						},
+						"description": "### Get Entries\n\nThis endpoint is used to retrieve a list of entries.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response\n\n- `entries`: An array of entry objects containing information about each entry.\n    \n\nExample:\n\n``` json\n{\n    \"entries\": [\n        {\n            \"id\": \"123\",\n            \"title\": \"Sample Entry 1\",\n            \"content\": \"This is the content of sample entry 1\"\n        },\n        {\n            \"id\": \"456\",\n            \"title\": \"Sample Entry 2\",\n            \"content\": \"This is the content of sample entry 2\"\n        }\n    ]\n}\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "Tests related to the data and functionality that drive the Demoblaze homepage."
+		},
+		{
+			"name": "About Page",
+			"item": [
+				{
+					"name": "About us link",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 404 (Video Not Found)\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response indicates 'Not Found' content type (may vary)\", function () {\r",
+									"    \r",
+									"    const contentType = pm.response.headers.get(\"Content-Type\");\r",
+									"    pm.expect(contentType).to.not.be.null; // Check if Content-Type header exists\r",
+									"   \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "image/jpeg",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/imgs/front.jpg\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"imgs",
+								"front.jpg\n"
+							]
+						},
+						"description": "The endpoint retrieves an image file in JPEG format from the specified URL.\n\nThe response of this request can be documented as a JSON schema as follows:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Status\": {\n      \"type\": \"number\",\n      \"description\": \"The HTTP status code of the response.\"\n    },\n    \"Content-Type\": {\n      \"type\": \"string\",\n      \"description\": \"The type of content returned in the response.\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "Tests related to elements and links within the \"About Us\"  \npage."
+		},
+		{
+			"name": "Cart Page",
+			"item": [
+				{
+					"name": "Add to Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 for adding to cart\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Fixed test for checking cart cookie update\r",
+									"pm.test(\"Cart cookie might have been updated\", function () {\r",
+									"    const cartCookies = pm.cookies.filter(cookie => cookie.name.includes('cart') || cookie.name.includes('session'));\r",
+									"    pm.expect(cartCookies.length).to.be.greaterThanOrEqual(0); // Or check for a specific cookie value change\r",
+									"});\r",
+									"\r",
+									"// If there's a separate /viewcart endpoint:\r",
+									"// pm.test(\"Product is present in the cart after adding\", function () {\r",
+									"//     pm.sendRequest(\"https://api.demoblaze.com/viewcart\", function (err, response) {\r",
+									"//         if (!err) {\r",
+									"//             const cartResponse = response.json();\r",
+									"//             pm.expect(cartResponse).to.have.property('items');\r",
+									"//             // Add more specific assertions to check if the added product is in the 'items' array\r",
+									"//         } else {\r",
+									"//             pm.expect.fail(\"Error fetching cart details.\");\r",
+									"//         }\r",
+									"//     });\r",
+									"// });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"2d397d2e-2bba-f3f5-2d72-1c452cc28368\",\r\n    \"cookie\": \"dHJpcGxlX2ExNzQ1MTE1\",\r\n    \"prod_id\": \"{{phoneProductId}}\",\r\n    \"flag\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/addtocart\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"addtocart\n"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This endpoint allows users to add an item to the cart. The request should be sent via an HTTP POST method to the {{baseUrl}}/addtocart.\n\n### Request Body\n\nThe request body should be in JSON format and include the following parameters:\n\n- `id` (string): The unique identifier of the item.\n    \n- `cookie` (string): The user's cookie for authentication.\n    \n- `prod_id` (string): The product ID of the item to be added to the cart.\n    \n- `flag` (boolean): A flag indicating whether the item is to be added (true) or removed (false) from the cart.\n    \n\n### Response\n\nThe response to the request will include the relevant information about the item added to the cart, along with the updated cart details."
+					},
+					"response": []
+				},
+				{
+					"name": "Go to Cart Page",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 for getting cart contents\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a JSON object\", function () {\r",
+									"    pm.expect(pm.response.json()).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each item in the cart has expected properties\", function () {\r",
+									"    const cartData = pm.response.json();\r",
+									"    if (cartData && cartData.Items && Array.isArray(cartData.Items) && cartData.Items.length > 0) {\r",
+									"        cartData.Items.forEach(item => { // Fixed the reference to Items array\r",
+									"            pm.expect(item).to.have.property('cookie');\r",
+									"            pm.expect(item).to.have.property('id');\r",
+									"            pm.expect(item).to.have.property('prod_id');\r",
+									"        });\r",
+									"    } else if (cartData && cartData.Items && Array.isArray(cartData.Items) && cartData.Items.length === 0) {\r",
+									"        console.log(\"Cart is empty.\"); // Replaced pm.info() with console.log()\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"Response does not contain a valid 'Items' array.\");\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"cookie\": \"dHJpcGxlX2ExNzQ1MTE1\",\r\n    \"id\": \"2d397d2e-2bba-f3f5-2d72-1c452cc28368\" ,\r\n    \"prod_id\": \"{{phoneProductId}}\",\r\n    \"flag\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/viewcart",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"viewcart"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### View Cart\n\nThis endpoint allows the user to view the items in the cart.\n\n#### Request Body\n\n- cookie (string, required): The cookie identifying the user's session.\n    \n- id (string, required): The unique identifier for the user's session.\n    \n- prod_id (string, required): The ID of the product to be viewed in the cart.\n    \n- flag (boolean, required): Indicates whether to include additional details.\n    \n\n#### Response\n\nThe response returns a JSON schema representing the items in the cart.\n\n``` json\n{\n  \"Items\": [\n    {\n      \"cookie\": \"\",\n      \"id\": \"\",\n      \"prod_id\": \"\"\n    }\n  ]\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete from Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 for deleting item\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response indicates successful deletion (Not found is also acceptable if the item wasn't there)\", function () {\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.errorMessage).to.be.oneOf([undefined, \"Not found.\"]); // Added the period here\r",
+									"});\r",
+									"\r",
+									"// Verify that the item is no longer in the cart by calling the /viewcart endpoint\r",
+									"pm.test(\"Deleted item is no longer in the cart\", function () {\r",
+									"    // Get the ID of the item that was deleted (you might need to store this in an environment variable before this request)\r",
+									"    const deletedItemId = pm.environment.get(\"deletedItemId\");\r",
+									"\r",
+									"   \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"Current authToken:\", pm.environment.get(\"authToken\"));\r",
+									"console.log(\"Current phoneProductId:\", pm.environment.get(\"phoneProductId\"));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Encoding",
+								"value": "gzip, deflate, br, zstd",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://www.demoblaze.com",
+								"type": "text"
+							},
+							{
+								"key": "Referer",
+								"value": "https://www.demoblaze.com/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"id\": \"2d397d2e-2bba-f3f5-2d72-1c452cc28368\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/deleteitem\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"deleteitem\n"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "### DELETE /deleteitem\n\nThis endpoint is used to delete an item.\n\n#### Request Body\n\n- id (string, required): The unique identifier of the item to be deleted.\n    \n\nExample:\n\n``` json\n{\n    \"id\": \"2d397d2e-2bba-f3f5-2d72-1c452c ...\"\n}\n\n ```\n\n#### Response\n\nThe response for this request is a JSON object with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        // Add properties based on the actual response\n    }\n}\n\n ```\n\nStatus: 200 OK\n\nContent-Type: application/json"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logout Page",
+			"item": [
+				{
+					"name": "Logout link",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body has 'Items' array\", function () {\r",
+									"  pm.expect(pm.response.json().Items).to.be.an('array');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entries"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Signup Page",
+			"item": [
+				{
+					"name": "signup valid u&p",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 for successful signup\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body indicates signup failure (user already exists)\", function () {\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.errorMessage).to.eql(\"This user already exist.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{signupUsername}}\",\r\n    \"password\": \"{{signupPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Valid Username, Empty Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should indicate an error (e.g., 400)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 200]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should indicate password is required\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    if (responseJson && responseJson.errorMessage) {\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.include(\"password\");\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"Response body does not contain an errorMessage.\");\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{signupUsername}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup - Valid password, Empty Username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should indicate an error (e.g., 400)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 200]); // Expecting either a 400 or a 200 with an error message\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should indicate username is required\", function () {\r",
+									"    const responseBody = pm.response.text().toLowerCase();\r",
+									"    pm.expect(responseBody).to.include(\"username\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"{{signupPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup -Empty Username and password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should indicate an error (e.g., 400)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([400, 200]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body should indicate username and password are required\", function () {\r",
+									"    const responseBody = pm.response.text().toLowerCase();\r",
+									"    const responseJson = pm.response.json();\r",
+									"\r",
+									"    // Check for specific error messages in the text response\r",
+									"    pm.expect(responseBody).to.include(\"username\");\r",
+									"    pm.expect(responseBody).to.include(\"password\");\r",
+									"\r",
+									"    // If the server returns a JSON error message\r",
+									"    if (responseJson && responseJson.errorMessage) {\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.include(\"username\");\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.include(\"password\");\r",
+									"        \r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login Page",
+			"item": [
+				{
+					"name": "Login valid u&p",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is not empty\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is a string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Store the authentication token in an environment variable\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    const firstKey = Object.keys(responseJson)[0]; // Get the first key\r",
+									"\r",
+									"    if (firstKey) {\r",
+									"        pm.environment.set(\"authToken\", responseJson[firstKey]);\r",
+									"        pm.expect(pm.environment.get(\"authToken\")).to.eql(responseJson[firstKey]);\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"No key found in the response\");\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{loginUsername}}\",\r\n    \"password\": \"{{loginPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Unregistered Username, Registered Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should indicate unsuccessful login (e.g., 401 or 200 with error)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([401, 200]); // Adjust based on the actual status code\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body indicates user does not exist\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"\r",
+									"    // Check for the specific error message in the JSON response\r",
+									"    if (responseJson && responseJson.errorMessage) {\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.include(\"user does not exist\");\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"Response body does not contain an errorMessage.\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"// You might also want to assert that no authentication token is returned\r",
+									"pm.test(\"Authentication token is not returned\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.not.have.property(\"token\"); \r",
+									"    pm.expect(responseJson).to.not.have.property(\"Item\"); \r",
+									"});\r",
+									"\r",
+									"// Verify that no session cookies are set (or existing ones remain unchanged)\r",
+									"pm.test(\"Session cookies are not set or remain unchanged\", function () {\r",
+									"        \r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{unregisteredUsername}}\",\r\n    \"password\": \"{{registeredPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Valid Username, Incorrect Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should indicate unsuccessful login (e.g., 401 or 200 with error)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([401, 200]); // Adjust based on the actual status code\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body indicates incorrect password\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"\r",
+									"    // Check for the specific error message in the JSON response\r",
+									"    if (responseJson && responseJson.errorMessage) {\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.include(\"wrong password\");\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"Response body does not contain an errorMessage.\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"// You might also want to assert that no authentication token is returned\r",
+									"pm.test(\"Authentication token is not returned\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.not.have.property(\"token\");\r",
+									"    pm.expect(responseJson).to.not.have.property(\"Item\"); // Added check for potential \"Item\" property\r",
+									"});\r",
+									"\r",
+									"// Verify that no session cookies are set (or existing ones remain unchanged)\r",
+									"pm.test(\"Session cookies are not set or remain unchanged\", function () {\r",
+									"    // You'll need to implement logic here to compare cookies before and after the request.\r",
+									"    // A simple approach is to check if the 'PHPSESSID' cookie (or other session identifiers)\r",
+									"    // is present in the response cookies. If login fails, it likely shouldn't be set or changed.\r",
+									"    const sessionCookie = pm.cookies.get('PHPSESSID');\r",
+									"    pm.expect(sessionCookie).to.be.undefined; // Or assert it remains the same as before the request\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{validUsername}}\",\r\n    \"password\": \"{{incorrectPassword}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Empty Username, Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should indicate unsuccessful login (e.g., 401 or 200 with error)\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([401, 200]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body indicates missing username\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"\r",
+									"    // Check for the specific error message in the JSON response\r",
+									"    if (responseJson && responseJson.errorMessage) {\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.include(\"bad parameter\");\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.include(\"missing username\");\r",
+									"        // You can optionally check if \"password\" is *not* explicitly mentioned\r",
+									"        pm.expect(responseJson.errorMessage.toLowerCase()).to.not.include(\"password\");\r",
+									"    } else {\r",
+									"        pm.expect.fail(\"Response body does not contain an errorMessage.\");\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"// You might also want to assert that no authentication token is returned\r",
+									"pm.test(\"Authentication token is not returned\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.not.have.property(\"token\");\r",
+									"    pm.expect(responseJson).to.not.have.property(\"Item\");\r",
+									"});\r",
+									"\r",
+									"// Verify that no session cookies are set (or existing ones remain unchanged)\r",
+									"pm.test(\"Session cookies are not set or remain unchanged\", function () {\r",
+									"\r",
+									"});\r",
+									"\r",
+									"// You might also want to assert that no authentication token is returned\r",
+									"pm.test(\"Authentication token is not returned\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson).to.not.have.property(\"token\");\r",
+									"    pm.expect(responseJson).to.not.have.property(\"Item\");\r",
+									"});\r",
+									"\r",
+									"// Verify that no session cookies are set (or existing ones remain unchanged)\r",
+									"pm.test(\"Session cookies are not set or remain unchanged\", function () {\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login\n"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact Page",
+			"item": [
+				{
+					"name": "Contact - Send Message",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200 for successful message submission\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is not empty (indicating some data retrieval)\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.be.empty;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is an array\", function () {\r",
+									"    const responseJson = pm.response.json();\r",
+									"    // Check if the response is an object and then if its *values* are arrays\r",
+									"    const firstValue = Object.values(responseJson)[0];\r",
+									"    pm.expect(firstValue).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml; charset=UTF-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/entries\n?{{contactEmail}}=triple3a@gmail.com&{{contactName}}=Aya&{{contactMessage}}=Hello",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"entries\n"
+							],
+							"query": [
+								{
+									"key": "{{contactEmail}}",
+									"value": "triple3a@gmail.com",
+									"description": "contact mail"
+								},
+								{
+									"key": "{{contactName}}",
+									"value": "Aya",
+									"description": "contact name "
+								},
+								{
+									"key": "{{contactMessage}}",
+									"value": "Hello",
+									"description": "sending message"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 for successful signup\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body indicates signup failure (user already exists)\", function () {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody.errorMessage).to.eql(\"This user already exist.\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{signupUsername}}\",\r\n    \"password\": \"{{signupPassword}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/signup",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

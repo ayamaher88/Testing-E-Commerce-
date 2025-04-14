@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="ContactUs Tests Suite">
+    <test name="ContactUs Tests">
+        <classes>
+            <class name="tests.ContactPageTestCase1"/>
+            <class name="tests.ContactPageTestCase2"/>
+            <class name="tests.ContactPageTestCase3"/>
+            <class name="tests.ContactPageTestCase4"/>
+            <class name="tests.ContactPageTestCase5"/>
+
+        </classes>
+    </test>
+
+</suite>

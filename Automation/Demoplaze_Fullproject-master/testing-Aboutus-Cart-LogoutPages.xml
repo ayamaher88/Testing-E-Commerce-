@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="threePages Tests Suite">
+    <test name="AboutUsPage Tests" >
+        <classes>
+            <class name="tests.AboutusPageTestCase1"/>
+        </classes>
+
+    </test>
+    <test name="CartPage Tests" parallel="classes" thread-count="2">
+        <classes>
+            <class name="tests.CartPageTestCase1"/>
+            <class name="tests.CartPageTestCase2"/>
+            <class name="tests.CartPageTestCase3"/>
+
+        </classes>
+    </test>
+    <test name="LogoutPage Tests"  parallel="classes" thread-count="1">
+        <classes>
+            <class name="tests.LogoutPageTestCase1"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,80 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Demoblaze Tests" >
+    <test name="HomePage Tests" >
+        <classes>
+            <class name="tests.HomePageTestCase1"/>
+            <class name="tests.HomePageTestCase2"/>
+            <class name="tests.HomePageTestCase3"/>
+            <class name="tests.HomePageTestCase4"/>
+            <class name="tests.HomePageTestCase5"/>
+            <class name="tests.HomePageTestCase6"/>
+            <class name="tests.HomePageTestCase7"/>
+        </classes>
+        </test>
+    <test name="AboutUsPage Tests" >
+        <classes>
+            <class name="tests.AboutusPageTestCase1"/>
+        </classes>
+
+    </test>
+    <test name="CartPage Tests" >
+        <classes>
+            <class name="tests.CartPageTestCase1"/>
+            <class name="tests.CartPageTestCase2"/>
+            <class name="tests.CartPageTestCase3"/>
+
+        </classes>
+    </test>
+    <test name="LogoutPage Tests" >
+        <classes>
+            <class name="tests.LogoutPageTestCase1"/>
+        </classes>
+    </test>
+    <test name="SignupPage Tests" >
+        <classes>
+            <class name="tests.SignupPageTestCase1"/>
+            <class name="tests.SignupPageTestCase2"/>
+            <class name="tests.SignupPageTestCase3"/>
+            <class name="tests.SignupPageTestCase4"/>
+
+        </classes>
+    </test>
+    <test name="LoginPage Tests" >
+        <classes>
+            <class name="tests.LoginPageTestCase1"/>
+            <class name="tests.LoginPageTestCase2"/>
+            <class name="tests.LoginPageTestCase3"/>
+            <class name="tests.LoginPageTestCase4"/>
+            <class name="tests.LoginPageTestCase5"/>
+            <class name="tests.LoginPageTestCase6"/>
+            <class name="tests.LoginPageTestCase7"/>
+            <class name="tests.LoginPageTestCase8"/>
+
+        </classes>
+    </test>
+    <test name="ContactPage Tests" >
+        <classes>
+            <class name="tests.ContactPageTestCase1"/>
+            <class name="tests.ContactPageTestCase2"/>
+            <class name="tests.ContactPageTestCase3"/>
+            <class name="tests.ContactPageTestCase4"/>
+            <class name="tests.ContactPageTestCase5"/>
+
+        </classes>
+    </test>
+
+</suite>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
