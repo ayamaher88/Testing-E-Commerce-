@@ -4,17 +4,25 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: 'Asmaasaida', url: 'https://github.com/Asmaasaida/Demoplaze_Fullproject.git'
+                echo 'Checking out code...'
+                git scm
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the Maven project...'
+                sh 'cd Automation/Demoplaze_Fullproject-master'
+                sh 'mvn clean install -DskipTests'
             }
         }
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh 'your_test_command --report=test_report.xml' // Replace with your actual test command
-                echo 'Publishing test results...'
-                junit 'test_report.xml' // Adjust report path if needed
+                echo 'Running the TestNG tests...'
+                sh 'cd Automation/Demoplaze_Fullproject-master'
+                sh 'mvn test'
+                junit 'Automation/Demoplaze_Fullproject-master/target/surefire-reports/TEST-*.xml'
             }
         }
-        // Add other build, package, deploy stages as needed
+        // You can add more stages here for reporting, etc.
     }
 }
