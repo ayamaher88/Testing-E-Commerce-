@@ -6,8 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main'
-                    url:'https://github.com/ayamaher88/Testing-E-Commerce-.git'
+                git branch: 'main', url: 'https://github.com/ayamaher88/Testing-E-Commerce-.git'
                 checkout scm
             }
         }
