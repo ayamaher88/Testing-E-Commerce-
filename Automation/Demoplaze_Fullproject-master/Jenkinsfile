@@ -4,13 +4,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the Maven project...'
+                bat 'echo %PATH%'
                 bat 'cd Automation\\Demoplaze_Fullproject-master && mvn.cmd clean install -DskipTests'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running the TestNG tests...'
-               bat 'cd Automation\\Demoplaze_Fullproject-master && mvn.cmd test'
+                bat 'cd Automation\\Demoplaze_Fullproject-master && mvn.cmd test'
                 junit 'Automation/Demoplaze_Fullproject-master/target/surefire-reports/TEST-*.xml'
             }
         }
