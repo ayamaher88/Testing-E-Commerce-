@@ -1,10 +1,7 @@
 pipeline {
     agent any
 
-    tools {
-        // If you used the NodeJS plugin in Jenkins to manage Node.js
-        // nodejs 'NodeJS'
-    }
+   
 
     stages {
         stage('Checkout') {
