@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Test Shell') {
             steps {
-                sh '"C:\Program Files\Git\bin\sh.exe"'
+                sh '"C:\\Program Files\\Git\\bin\\sh.exe" -c "echo Hello from Shell"'
             }
         }
         // ... other stages
