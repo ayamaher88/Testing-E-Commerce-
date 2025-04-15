@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo 'Running API Tests with Newman...'
                 bat 'npm install -g newman'
-                bat 'newman run "Demoblaze API Tests.postman_collection.json"'
+                bat 'newman run "API Testing/Demoblaze API Tests.postman_collection.json"'
                 // Add your environment and reporter options as needed using 'bat'
                 // For example:
                 // bat 'newman run "collection.json" -e "environment.json" -r htmlextra --reporter-htmlextra-export report.html'
