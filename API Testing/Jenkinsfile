@@ -32,7 +32,7 @@ pipeline {
                     writeFile file: 'environment.json', text: environmentJson
 
                     def newmanResult = bat(
-                        script: "newman run 'API Testing/Demoblaze API Tests.postman_collection.json' -e environment.json",
+                        script: "newman run \"API Testing/Demoblaze API Tests.postman_collection.json\" -e environment.json",
                         returnStatus: true
                     )
                     deleteDir() // Clean up the temporary environment file
