@@ -1,26 +1,30 @@
 pipeline {
     agent any
-
-    environment {
-        NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm'
-        NODE_HOME = 'C:\\Program Files\\nodejs'
+    tools {
+        nodejs 'nodejs-default' // Use the name you gave your NodeJS configuration
     }
-
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/ayamaher88/Testing-E-Commerce-.git'
-                checkout scm
             }
         }
 
-       stage('Run API Tests with Newman') {
-           steps {
-               echo 'Running API Tests with Newman...'
-               bat 'echo %PATH%'
-               bat 'newman run "Demoblaze API Tests.postman_collection.json"'
-    }
-}
+        stage('Run API Tests with Newman') {
+            steps {
+                echo 'Running API Tests with Newman...'
+                sh 'npm install -g newman'
+                sh 'newman run "Demoblaze API Tests.postman_collection.json"'
+                // Add your environment and reporter options as needed
+            }
+        }
+
+        stage('Publish API Test Results (Optional)') {
+            steps {
+                echo 'Publishing API Test Results (if any)...'
+                // ... (reporting configuration as needed)
+            }
+        }
 
         stage('Post-Build Actions') {
             steps {
