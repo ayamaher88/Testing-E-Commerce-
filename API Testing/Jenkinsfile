@@ -16,11 +16,7 @@ pipeline {
         stage('Check API Connectivity') {
             steps {
                 echo "Checking API connectivity..."
-                // Option 1: Try HEAD request on /bycat
-                // bat "curl --head --fail ${env.BASE_URL}/bycat"
-
-                // Option 2: Try POST request on /login (getting headers only)
-                bat "curl -I --fail -X POST ${env.BASE_URL}/login"
+                bat "curl -I --fail -X POST -H 'Content-Length: 0' ${env.BASE_URL}/login"
             }
         }
 
