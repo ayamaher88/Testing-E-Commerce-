@@ -1,10 +1,10 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs-default' // Use the name you gave your NodeJS configuration
+        nodejs 'nodejs-default'
     }
     environment {
-        BASE_URL = 'https://api.demoblaze.com'  // Replace with your actual API base URL
+        BASE_URL = 'https://api.demoblaze.com'
     }
     stages {
         stage('Checkout') {
@@ -18,27 +18,36 @@ pipeline {
                 echo 'Running API Tests with Newman...'
                 bat 'npm install -g newman'
                 script {
+                    def environmentJson = """
+                    {
+                        "values": [
+                            {
+                                "key": "baseUrl",
+                                "value": "${env.BASE_URL}",
+                                "enabled": true
+                            }
+                        ]
+                    }
+                    """
+                    writeFile file: 'environment.json', text: environmentJson
+
                     def newmanResult = bat(
-                        script: "newman run 'API Testing/Demoblaze API Tests.postman_collection.json' -e <(echo '{\"values\":[{\"key\":\"baseUrl\",\"value\":\"${env.BASE_URL}\",\"enabled\":true}]}')",
+                        script: "newman run 'API Testing/Demoblaze API Tests.postman_collection.json' -e environment.json",
                         returnStatus: true
                     )
+                    deleteDir() // Clean up the temporary environment file
+
                     if (newmanResult != 0) {
                         error "Newman tests failed!"
                     }
                 }
-                // You can add reporter options here if needed
-                // Example with HTML Extra reporter:
-                // bat "newman run 'API Testing/Demoblaze API Tests.postman_collection.json' -e <(echo '{\"values\":[{\"key\":\"baseUrl\",\"value\":\"${env.BASE_URL}\",\"enabled\":true}]}') -r htmlextra --reporter-htmlextra-export report.html"
             }
         }
 
         stage('Publish API Test Results (Optional)') {
             steps {
                 echo 'Publishing API Test Results (if any)...'
-                // You can configure publishing reports here, for example, using the HTML Publisher Plugin
-                // if you are generating an HTML report with Newman.
-                // Example:
-                // publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '.', reportFiles: 'report.html', reportName: 'Newman API Test Report'])
+                // ... (reporting configuration as needed)
             }
         }
 
