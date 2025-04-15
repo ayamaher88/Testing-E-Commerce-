@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Test Shell') {
+        stage('Test Batch') {
             steps {
-                sh '"C:\\Program Files\\Git\\bin\\sh.exe" -c "echo Hello from Shell"'
+                bat 'echo Hello from Batch'
             }
         }
         // ... other stages
