@@ -13,19 +13,12 @@ pipeline {
                 checkout scm
             }
         }
-stage('Run API Tests with Newman') {
-    steps {
-        echo 'Running API Tests with Newman...'
-        bat 'newman run "Demoblaze API Tests.postman_collection.json"'
-        // Add your environment and reporter options as needed
-    }
-}
 
        stage('Run API Tests with Newman') {
-    steps {
-        echo 'Running API Tests with Newman...'
-        bat 'echo %PATH%'
-        bat 'newman run "Demoblaze API Tests.postman_collection.json"'
+           steps {
+               echo 'Running API Tests with Newman...'
+               bat 'echo %PATH%'
+               bat 'newman run "Demoblaze API Tests.postman_collection.json"'
     }
 }
 
