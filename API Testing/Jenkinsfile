@@ -13,6 +13,15 @@ pipeline {
             }
         }
 
+        stage('Check API Connectivity') {
+            steps {
+                echo "Checking API connectivity..."
+                bat "curl --head --fail ${env.BASE_URL}"
+                // --head: only retrieves headers, faster than getting the whole body
+                // --fail: makes curl return an error on HTTP failures (like 4xx, 5xx)
+            }
+        }
+
         stage('Run API Tests with Newman') {
             steps {
                 echo 'Running API Tests with Newman...'
