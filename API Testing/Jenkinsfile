@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm'
-        NODE_HOME = 'C:\\Program Files\\nodejs' // Ensure this is the correct path
+        NODE_HOME = 'C:\\Program Files\\nodejs'
     }
 
     stages {
@@ -21,12 +21,12 @@ pipeline {
                     echo "Setting temporary environment variables for this step..."
                     set PATH="${NODE_HOME};${NEWMAN_HOME};%PATH%"
                     echo "Current PATH before Newman: %PATH%"
-                    newman --version
-                    newman run "Demoblaze API Tests.postman_collection.json"
+                    "${NEWMAN_HOME}\\newman.cmd" --version
+                    "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json"
                     // If you have an environment file:
-                    // newman run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json"
+                    // "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json"
                     // If you want to generate reports:
-                    // newman run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json" -r htmlextra,junit --reporter-htmlextra-export test-report.html --reporter-junit-export junit-report.xml
+                    // "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json" -r htmlextra,junit --reporter-htmlextra-export test-report.html --reporter-junit-export junit-report.xml
                 """
             }
         }
