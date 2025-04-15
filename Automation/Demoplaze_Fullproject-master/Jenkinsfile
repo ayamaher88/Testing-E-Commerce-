@@ -2,16 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out code...'
-                git url: 'https://github.com/ayamaber88/Testing-E-Commerce.git',
-                   
-                    branch: 'main',
-                    changelog: false,
-                    poll: false
-            }
-        }
+        
         stage('Build') {
             steps {
                 echo 'Building the Maven project...'
