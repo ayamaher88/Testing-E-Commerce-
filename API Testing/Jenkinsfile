@@ -27,7 +27,10 @@ pipeline {
 
         stage('Post-Build Actions') {
             steps {
-                // ...
+                script {
+        echo 'Performing post-build actions...'
+        // Add your actual post-build steps here
+      
             }
         }
     }
