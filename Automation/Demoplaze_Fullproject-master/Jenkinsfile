@@ -5,7 +5,11 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out code...'
-                git scm
+                git url: 'https://github.com/ayamaber88/Testing-E-Commerce.git',
+                   
+                    branch: 'main',
+                    changelog: false,
+                    poll: false
             }
         }
         stage('Build') {
