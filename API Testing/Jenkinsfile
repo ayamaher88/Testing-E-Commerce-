@@ -15,9 +15,9 @@ pipeline {
         }
 
         stage('Run API Tests with Newman') {
-            steps { // <--- Missing 'steps' block here in the previous attempt
+            steps {
                 echo 'Running API Tests with Newman...'
-                withEnv(["PATH+NODE=${env.NODE_HOME}"]) {
+                withEnv(["PATH=${env.NODE_HOME}:${env.PATH}"]) {
                     executable "${env.NEWMAN_HOME}\\newman.cmd"
                     args "run", "Demoblaze API Tests.postman_collection.json"
                 }
