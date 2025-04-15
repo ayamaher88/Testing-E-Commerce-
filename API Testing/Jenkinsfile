@@ -18,15 +18,12 @@ pipeline {
             steps {
                 echo 'Running API Tests with Newman...'
                 bat """
+                    echo "Setting environment variables..."
+                    set NEWMAN_HOME="${NEWMAN_HOME}"
+                    set NODE_HOME="${NODE_HOME}"
                     set PATH="${NODE_HOME};%PATH%"
                     echo "Current PATH: %PATH%"
-                    IF EXIST "%NODE_HOME%\\node.exe" (
-                        echo "Node.js executable found."
-                        "%NODE_HOME%\\node.exe" "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json"
-                    ) ELSE (
-                        echo "Node.js executable NOT found at %NODE_HOME%."
-                        exit 1
-                    )
+                    "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json"
                 """
             }
         }
