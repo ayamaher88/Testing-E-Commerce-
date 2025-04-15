@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm'
-        NODE_HOME = 'C:\\Program Files\\nodejs' // Ensure this is the correct path
+        NODE_HOME = 'C:\\Program Files\\nodejs' // Double-check this path!
     }
 
     stages {
@@ -19,6 +19,7 @@ pipeline {
                 echo 'Running API Tests with Newman...'
                 bat """
                     set PATH="${NODE_HOME};%PATH%"
+                    where node
                     "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json"
                 """
             }
