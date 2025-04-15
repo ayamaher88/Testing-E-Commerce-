@@ -1,17 +1,19 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven_3.9.9' // Replace 'Maven_3.9.9' with the exact name you gave your Maven installation in Global Tool Configuration
+    }
     stages {
         stage('Build') {
             steps {
                 echo 'Building the Maven project...'
-                bat 'echo %PATH%'
-                bat 'cd Automation\\Demoplaze_Fullproject-master && mvn.cmd clean install -DskipTests'
+                sh 'cd Automation/Demoplaze_Fullproject-master && mvn clean install -DskipTests'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running the TestNG tests...'
-                bat 'cd Automation\\Demoplaze_Fullproject-master && mvn.cmd test'
+                sh 'cd Automation/Demoplaze_Fullproject-master && mvn test'
                 junit 'Automation/Demoplaze_Fullproject-master/target/surefire-reports/TEST-*.xml'
             }
         }
