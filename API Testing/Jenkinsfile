@@ -6,8 +6,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/ayamaher88/Testing-E-Commerce-.git'
-                checkout scmGit(extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'API Testing']])
+                git branch: 'main'
+                url 'https://github.com/ayamaher88/Testing-E-Commerce-.git'
+                checkout scm
             }
         }
 
