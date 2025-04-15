@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm'
         NODE_HOME = 'C:\\Program Files\\nodejs' // Ensure this is the correct path
+        // It's generally better to rely on the system PATH for globally installed tools
+        // NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/ayamaher88/Testing-E-Commerce-.git'
-                checkout scm
             }
         }
 
@@ -18,11 +18,15 @@ pipeline {
             steps {
                 echo 'Running API Tests with Newman...'
                 bat """
-                    echo "Setting environment variables..."
-                    set NODE_HOME="${NODE_HOME}"
+                    echo "Setting temporary environment variables for this step..."
                     set PATH="${NODE_HOME};%PATH%"
                     echo "Current PATH before Newman: %PATH%"
-                    CALL "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json"
+                    newman --version
+                    newman run "Demoblaze API Tests.postman_collection.json"
+                    // If you have an environment file:
+                    // newman run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json"
+                    // If you want to generate reports:
+                    // newman run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json" -r htmlextra,junit --reporter-htmlextra-export test-report.html --reporter-junit-export junit-report.xml
                 """
             }
         }
