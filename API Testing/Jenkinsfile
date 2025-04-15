@@ -21,12 +21,12 @@ pipeline {
                     echo "Setting temporary environment variables for this step..."
                     set PATH="${NODE_HOME};${NEWMAN_HOME};%PATH%"
                     echo "Current PATH before Newman: %PATH%"
-                    "${NEWMAN_HOME}\\newman.cmd" --version
-                    "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json"
+                    PATH="${NODE_HOME};${NEWMAN_HOME};%PATH%" "${NEWMAN_HOME}\\newman.cmd" --version
+                    PATH="${NODE_HOME};${NEWMAN_HOME};%PATH%" "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json"
                     // If you have an environment file:
-                    // "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json"
+                    // PATH="${NODE_HOME};${NEWMAN_HOME};%PATH%" "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json"
                     // If you want to generate reports:
-                    // "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json" -r htmlextra,junit --reporter-htmlextra-export test-report.html --reporter-junit-export junit-report.xml
+                    // PATH="${NODE_HOME};${NEWMAN_HOME};%PATH%" "${NEWMAN_HOME}\\newman.cmd" run "Demoblaze API Tests.postman_collection.json" -e "your_environment.json" -r htmlextra,junit --reporter-htmlextra-export test-report.html --reporter-junit-export junit-report.xml
                 """
             }
         }
