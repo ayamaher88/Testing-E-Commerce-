@@ -1,7 +1,9 @@
 pipeline {
     agent any
 
-   
+    environment {
+        NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm' // Use double backslashes or single forward slashes
+    }
 
     stages {
         stage('Checkout') {
@@ -14,7 +16,7 @@ pipeline {
         stage('Run API Tests with Newman') {
             steps {
                 echo 'Running API Tests with Newman...'
-                bat 'newman run "Demoblaze API Tests.postman_collection.json"'
+                bat "\"${NEWMAN_HOME}\\newman.cmd\" run \"Demoblaze API Tests.postman_collection.json\""
             }
         }
 
@@ -28,11 +30,10 @@ pipeline {
         stage('Post-Build Actions') {
             steps {
                 script {
-        echo 'Performing post-build actions...'
-        // Add your actual post-build steps here
-      
+                    echo 'Performing post-build actions...'
+                    // Add your actual post-build steps here
+                }
             }
         }
     }
-}
 }
