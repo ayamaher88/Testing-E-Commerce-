@@ -21,12 +21,13 @@ stage('Run API Tests with Newman') {
     }
 }
 
-        stage('Publish API Test Results (Optional)') {
-            steps {
-                echo 'Publishing API Test Results (if any)...'
-                // ... (reporting configuration as needed)
-            }
-        }
+       stage('Run API Tests with Newman') {
+    steps {
+        echo 'Running API Tests with Newman...'
+        bat 'echo %PATH%'
+        bat 'newman run "Demoblaze API Tests.postman_collection.json"'
+    }
+}
 
         stage('Post-Build Actions') {
             steps {
