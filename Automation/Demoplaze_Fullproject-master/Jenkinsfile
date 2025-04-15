@@ -1,9 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Test Batch') {
+        stage('Build') {
             steps {
-                bat 'echo Hello from Batch'
+                echo 'Building the Maven project...'
+                bat 'cd Automation\\Demoplaze_Fullproject-master && mvn clean install -DskipTests'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running the TestNG tests...'
+                bat 'cd Automation\\Demoplaze_Fullproject-master && mvn test'
+                junit 'Automation/Demoplaze_Fullproject-master/target/surefire-reports/TEST-*.xml'
             }
         }
         // ... other stages
