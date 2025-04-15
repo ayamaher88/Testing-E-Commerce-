@@ -16,7 +16,7 @@ pipeline {
         stage('Check API Connectivity') {
             steps {
                 echo "Checking API connectivity..."
-                bat "curl --fail -X POST -H 'Content-Type: application/json' -d \"{\\\"username\\\": \\\"test\\\", \\\"password\\\": \\\"test\\\"}\" ${env.BASE_URL}/login"
+                bat "curl --fail -X POST -H 'Content-Type: application/json' -d \"{\\\"username\\\": \\\"tester\\\", \\\"password\\\": \\\"tester\\\"}\" ${env.BASE_URL}/login"
             }
         }
 
