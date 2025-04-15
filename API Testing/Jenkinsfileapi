@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    tools {
+        // If you used the NodeJS plugin in Jenkins to manage Node.js
+        // nodejs 'NodeJS'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/ayamaher88/Testing-E-Commerce-.git'
+                checkout scmGit(extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'API Testing']])
+            }
+        }
+
+        stage('Run API Tests with Newman') {
+            steps {
+                echo 'Running API Tests with Newman...'
+                bat 'newman run "Demoblaze API Tests.postman_collection.json"'
+            }
+        }
+
+        stage('Publish API Test Results (Optional)') {
+            steps {
+                echo 'Publishing API Test Results (if any)...'
+                // ... (reporting configuration as needed)
+            }
+        }
+
+        stage('Post-Build Actions') {
+            steps {
+                // ...
+            }
+        }
+    }
+}
