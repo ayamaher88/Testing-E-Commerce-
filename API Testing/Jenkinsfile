@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
+        NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm'
         NODE_HOME = 'C:\\Program Files\\nodejs' // Ensure this is the correct path
-        // It's generally better to rely on the system PATH for globally installed tools
-        // NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/ayamaher88/Testing-E-Commerce-.git'
+                checkout scm
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
                 echo 'Running API Tests with Newman...'
                 bat """
                     echo "Setting temporary environment variables for this step..."
-                    set PATH="${NODE_HOME};%PATH%"
+                    set PATH="${NODE_HOME};${NEWMAN_HOME};%PATH%"
                     echo "Current PATH before Newman: %PATH%"
                     newman --version
                     newman run "Demoblaze API Tests.postman_collection.json"
