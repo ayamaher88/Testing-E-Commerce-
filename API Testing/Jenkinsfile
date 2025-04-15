@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         NEWMAN_HOME = 'C:\\Users\\ascho\\AppData\\Roaming\\npm' // Use double backslashes or single forward slashes
+        NODE_HOME = 'C:\\Program Files\\nodejs'
     }
 
     stages {
