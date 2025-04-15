@@ -16,9 +16,9 @@ pipeline {
         stage('Check API Connectivity') {
             steps {
                 echo "Checking API connectivity..."
-                bat "curl --head --fail ${env.BASE_URL}"
-                // --head: only retrieves headers, faster than getting the whole body
-                // --fail: makes curl return an error on HTTP failures (like 4xx, 5xx)
+                bat "curl --head --fail ${env.BASE_URL}/login"
+                // OR try another endpoint from your collection:
+                // bat "curl --head --fail ${env.BASE_URL}/bycat"
             }
         }
 
