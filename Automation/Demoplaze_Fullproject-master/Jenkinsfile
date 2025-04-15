@@ -1,23 +1,19 @@
 pipeline {
     agent any
-
     stages {
-        
         stage('Build') {
             steps {
                 echo 'Building the Maven project...'
-                sh 'cd Automation/Demoplaze_Fullproject-master'
-                sh 'mvn clean install -DskipTests'
+                sh '"C:\\Program Files\\Git\\bin\\sh" -c "cd Automation/Demoplaze_Fullproject-master && mvn clean install -DskipTests"'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running the TestNG tests...'
-                sh 'cd Automation/Demoplaze_Fullproject-master'
-                sh 'mvn test'
+                sh '"C:\\Program Files\\Git\\bin\\sh" -c "cd Automation/Demoplaze_Fullproject-master && mvn test"'
                 junit 'Automation/Demoplaze_Fullproject-master/target/surefire-reports/TEST-*.xml'
             }
         }
-        // You can add more stages here for reporting, etc.
+        // ... other stages
     }
 }
