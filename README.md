@@ -3,8 +3,7 @@
 # Demoblaze Automated Testing Framework
 
 ## Project Title: Automated Testing Framework for Demoblaze Web Application
-
-### Tester: Aya (Software Tester Intern)  
+  
 ### Duration: 4 Weeks
 
 ## Objective:
