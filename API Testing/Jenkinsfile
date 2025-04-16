@@ -16,7 +16,7 @@ pipeline {
         stage('Check API Connectivity') {
             steps {
                 echo "Checking API connectivity..."
-                bat "curl --fail -X POST -H 'Content-Type: application/json' -d '{}' ${env.BASE_URL}/bycat"
+                bat "curl --fail -X POST -H 'Content-Type: application/json' -d '{\"category\": \"phones\"}' ${env.BASE_URL}/bycat"
             }
         }
 
@@ -30,7 +30,7 @@ pipeline {
                         "values": [
                             {
                                 "key": "baseUrl",
-                                "value": "${env.env.BASE_URL}",
+                                "value": "${env.BASE_URL}",
                                 "enabled": true
                             }
                         ]
