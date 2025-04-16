@@ -1,7 +1,5 @@
 # Testing-E-Commerce-
 
-# Demoblaze Automated Testing Framework
-
 ## Project Title: Automated Testing Framework for Demoblaze Web Application
   
 ### Duration: 4 Weeks
