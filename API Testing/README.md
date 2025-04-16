@@ -120,7 +120,7 @@
 
 #### Test Case:
 
-1. **Test Case Name**: About us link - Retrieve Image (GET)  
+6. **Test Case Name**: About us link - Retrieve Image (GET)  
    - **Request Method**: GET  
    - **Request URL**: {{baseUrl}}/imgs/front.jpg  
    - **Pre-requisites**: A global variable `baseUrl` is set to `https://api.demoblaze.com`.  
@@ -138,7 +138,7 @@
 
 #### Test Cases:
 
-1. **Test Case Name**: Add to Cart (POST)  
+7. **Test Case Name**: Add to Cart (POST)  
    - **Request Method**: POST  
    - **Request URL**: {{baseUrl}}/addtocart  
    - **Pre-requisites**: A global variable `baseUrl` is set to `https://api.demoblaze.com`.  
@@ -158,7 +158,124 @@
      - Status code: 200 OK
      - Cart cookie might have been updated
 
-2. **Test Case Name**: Go to Cart page (POST)  
-   - **Request Method**: POST  
-   - **Request URL**: {{baseUrl}}/...
+8. **Test Case Name:** Go to Cart page (POST)  
+   - **Request Method:** POST  
+   - **Request URL:** {{baseUrl}}/cart  
+   - **Pre-requisites:**  
+     - A global variable `baseUrl` is set to `https://api.demoblaze.com`.
+     - An environment variable `cartId` is set with a valid cart identifier.
+   - **Request Body:**
+     ```json
+     {
+       "cartId": "{{cartId}}"
+     }
+     ```
+   - **Test Steps:**  
+     1. Send a POST request to `{{baseUrl}}/cart` with the `cartId` in the request body.
+   - **Expected Outcome:**  
+     - Status code 200 OK.  
+     - Response body contains cart details.
+   - **Pass/Fail Criteria:**  
+     All expected outcomes are met. The status code is 200, and the response body contains valid cart details.
+
+---
+
+**D. Login and Signup Pages:**  
+Test Folder/Collection Name in Postman: Demoblaze API Tests / Login & Signup  
+Description: Tests related to login, signup, and session management.
+
+**Test Cases:**
+
+9. **Test Case Name:** User Login (POST)  
+   - **Request Method:** POST  
+   - **Request URL:** {{baseUrl}}/login  
+   - **Pre-requisites:**  
+     - A global variable `baseUrl` is set to `https://api.demoblaze.com`.
+     - Environment variables `validUsername` and `validPassword` are set with valid credentials.
+   - **Request Body:**
+     ```json
+     {
+       "username": "{{validUsername}}",
+       "password": "{{validPassword}}"
+     }
+     ```
+   - **Test Steps:**  
+     1. Send a POST request to `{{baseUrl}}/login` with the username and password.
+   - **Expected Outcome:**  
+     - Status code 200 OK.  
+     - Response body contains authentication token.
+   - **Pass/Fail Criteria:**  
+     All expected outcomes are met. Status code is 200, and the response contains the authentication token.
+
+10. **Test Case Name:** User Signup (POST)  
+   - **Request Method:** POST  
+   - **Request URL:** {{baseUrl}}/signup  
+   - **Pre-requisites:**  
+     - A global variable `baseUrl` is set to `https://api.demoblaze.com`.
+     - Environment variables `newUsername`, `newPassword`, and `newEmail` are set with valid signup details.
+   - **Request Body:**
+     ```json
+     {
+       "username": "{{newUsername}}",
+       "password": "{{newPassword}}",
+       "email": "{{newEmail}}"
+     }
+     ```
+   - **Test Steps:**  
+     1. Send a POST request to `{{baseUrl}}/signup` with the provided details in the request body.
+   - **Expected Outcome:**  
+     - Status code 200 OK.  
+     - Response body indicates successful account creation.
+   - **Pass/Fail Criteria:**  
+     All expected outcomes are met. The status code is 200, and the response indicates successful signup.
+
+---
+
+**E. Contact Page:**  
+Test Folder/Collection Name in Postman: Demoblaze API Tests / Contact Page  
+Description: Tests related to the contact form submission.
+
+**Test Cases:**
+
+11. **Test Case Name:** Submit Contact Form (POST)  
+   - **Request Method:** POST  
+   - **Request URL:** {{baseUrl}}/contact  
+   - **Pre-requisites:**  
+     - A global variable `baseUrl` is set to `https://api.demoblaze.com`.
+     - Environment variables `userName`, `userEmail`, and `userMessage` are set with valid contact details.
+   - **Request Body:**
+     ```json
+     {
+       "name": "{{userName}}",
+       "email": "{{userEmail}}",
+       "message": "{{userMessage}}"
+     }
+     ```
+   - **Test Steps:**  
+     1. Send a POST request to `{{baseUrl}}/contact` with the provided contact information.
+   - **Expected Outcome:**  
+     - Status code 200 OK.  
+     - Response body indicates successful submission.
+   - **Pass/Fail Criteria:**  
+     All expected outcomes are met. The status code is 200, and the response indicates the form was successfully submitted.
+
+---
+
+### III. Summary  
+The tests described in this document verify the functionality of key features of the Demoblaze application, including login, product browsing by category, adding to cart, and contacting support. All tests ensure that the API endpoints behave as expected, returning the correct responses with the appropriate status codes.
+
+### IV. Tools Used  
+- **Postman** was used to create, manage, and run the API tests.  
+- **Environment Variables** were used for sensitive information like user credentials and product IDs.
+
+### V. Next Steps  
+- Continue to expand the API tests for other pages and functionalities.  
+- Test for edge cases and error handling (e.g., invalid input, unauthorized access).  
+- Automate the tests with CI/CD pipelines to integrate them into the development workflow.
+
+---
+
+### VI. Conclusion  
+This test suite ensures the proper functionality of the Demoblaze API, covering critical aspects of user interaction with the platform. By verifying the responses from the API, the tests ensure that the API can support key application features, providing a stable foundation for the application's functionality.
+
 
