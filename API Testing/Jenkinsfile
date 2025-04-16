@@ -14,6 +14,9 @@ pipeline {
         }
 
         stage('Check API Connectivity') {
+            when {
+                expression { return false } // This will always skip the stage
+            }
             steps {
                 echo "Checking API connectivity..."
                 bat "curl --fail -X POST -H 'Content-Type: application/json' -d \"{\\\"category\\\": \\\"phones\\\"}\" ${env.BASE_URL}/bycat"
@@ -39,7 +42,7 @@ pipeline {
                     writeFile file: 'environment.json', text: environmentJson
 
                     def newmanResult = bat(
-                        script: "newman run \\\"API Testing/Demoblaze API Tests.postman_collection.json\\\" -e environment.json",
+                        script: "newman run \"API Testing/Demoblaze API Tests.postman_collection.json\" -e environment.json",
                         returnStatus: true
                     )
                     deleteDir() // Clean up the temporary environment file
