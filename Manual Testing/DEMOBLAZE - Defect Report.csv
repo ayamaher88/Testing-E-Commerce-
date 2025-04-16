@@ -1,0 +1,28 @@
+defectID,Bug_01,Bug_02,Bug_03,Bug_04,Bug_05
+title,HLS Playlist Request Error on About Page – Video Fails to Load,Confirmation message is sent even when email format is invalid in the contact form.,"Confirmation message is sent even when the name field contains invalid input (e.g., symbols or numbers).","Contact form allows message field with random characters (e.g., ###, 1234) and still sends the message.",Contact form allows submission even when all input fields are left empty.
+description,"When clicking on About from the menu, you will receive the error message""The media could not be loaded, either because the server or network failed or because the format is not supported.""","The contact form on the Demoblaze website currently accepts and processes email inputs that are not in a valid format. When a user enters an invalid email (e.g., missing ""@"" or domain), the form still allows submission and shows a confirmation message.","The contact form accepts invalid inputs in the name field (e.g., 1234, @@@, A!@#) and still sends the message successfully.","The message field does not validate meaningful content. Users can submit messages that contain only symbols or meaningless strings, which may be spam or testing noise.",The form sends a confirmation message without any input. This shows a lack of required field validation and can lead to empty or spam entries in the contact system.
+steps,"1. Go to the website""https://www.demoblaze.com/index.html#""","1.Go to the website""https://www.demoblaze.com/index.html#""","1.Go to the website""https://www.demoblaze.com/index.html#""","1.Go to the website""https://www.demoblaze.com/index.html#""","1.Go to the website""https://www.demoblaze.com/index.html#"""
+,"2.Click on the ""Log in "" link at the  menu bar ","2.Click on the ""Log in "" link at the menu bar ","2.Click on the ""Log in "" link at the menu bar ","2.Click on the ""Log in "" link at the menu bar ","2.Click on the ""Log in "" link at the menu bar "
+,3. Enter a valid  usename and pass word ,3. Enter a valid usename and pass word ,3. Enter a valid usename and pass word ,3. Enter a valid usename and pass word ,3. Enter a valid usename and pass word 
+,"4.Click on ""Log in"" button ","4.Click on ""Log in"" button ","4.Click on ""Log in"" button ","4.Click on ""Log in"" button ","4.Click on ""Log in"" button "
+,"5. Click on the ""About"" at the menu bar.","5.Click on ""Contact"" at the navigation bar","5.Click on ""Contact"" at the navigation bar","5.Click on ""Contact"" at the navigation bar","5.Click on ""Contact"" at the navigation bar"
+,,6. Enter invalid email,6. Enter valid email,6. Enter valid email,"6.Leave all fields empty (email, name and message)."
+,,7. Enter valid name,7. Enter invalid name,7. Enter valid name,"7. Click on ""Send Message"" button"
+,,8. Enter message,8. Enter message,8. Enter invalid message,
+,,"9. Click on ""Send Message"" button","9. Click on ""Send Message"" button","9. Click on ""Send Message"" button",
+Severity ,High,High,Medium,Low,High
+Expected result,"The ""About"" page should open successfully.
+
+The video should load and play without any errors.","Error message should appear: ""invalid email"".
+The message should not be sent, and the user should remain on the contact page","A validation error should appear: ""Please enter a valid name""
+The message should not be sent, and the user should remain on the contact page","A validation message should appear: ""Please enter a meaningful message""
+The message should not be sent, and the user should remain on the contact page","Error messages should be displayed for each required field
+The message should not be sent, and the user should remain on the contact page"
+Actual result,"An error message appears:
+""The media could not be loaded, either because the server or network failed or because the format is not supported.""
+
+The video does not load or play.","confirmation message is shown ""Thanks for the message!!""
+The form is submitted even though the email is invalid","confirmation message is shown ""Thanks for the message!!""
+The form is submitted even though the name is invalid","confirmation message is shown ""Thanks for the message!!""
+The form is submitted even though the message is invalid","confirmation message is shown ""Thanks for the message!!""
+Empty message is submitted"
