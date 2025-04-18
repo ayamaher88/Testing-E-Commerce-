@@ -1,7 +1,9 @@
 pipeline {
-    agent any
-    tools {
-        nodejs 'nodejs-default'
+    agent {
+        docker {
+            image 'node:18-alpine' // Or another suitable Node.js image with Newman
+            args '-v /var/run/docker.sock:/var/run/docker.sock' // If needed for Docker-in-Docker
+        }
     }
     environment {
         BASE_URL = 'https://api.demoblaze.com'
@@ -13,20 +15,10 @@ pipeline {
             }
         }
 
-        stage('Check API Connectivity') {
-            when {
-                expression { return false } // This will always skip the stage
-            }
-            steps {
-                echo "Checking API connectivity..."
-                bat "curl --fail -X POST -H 'Content-Type: application/json' -d \"{\\\"category\\\": \\\"phones\\\"}\" ${env.BASE_URL}/bycat"
-            }
-        }
-
         stage('Run API Tests with Newman') {
             steps {
                 echo 'Running API Tests with Newman...'
-                bat 'npm install -g newman'
+                sh 'npm install -g newman' // Install newman
                 script {
                     def environmentJson = """
                     {
@@ -41,23 +33,22 @@ pipeline {
                     """
                     writeFile file: 'environment.json', text: environmentJson
 
-                    def newmanResult = bat(
-                        script: "newman run \"API Testing/Demoblaze API Tests.postman_collection.json\" -e environment.json",
+                    def newmanResult = sh(
+                        script: 'newman run "API Testing/Demoblaze API Tests.postman_collection.json" -e environment.json --reporters cli,junit --reporter-junit-export results.xml',
                         returnStatus: true
                     )
-                    deleteDir() // Clean up the temporary environment file
+
+                    deleteDir()
 
                     if (newmanResult != 0) {
                         error "Newman tests failed!"
                     }
                 }
             }
-        }
-
-        stage('Publish API Test Results (Optional)') {
-            steps {
-                echo 'Publishing API Test Results (if any)...'
-                // ... (reporting configuration as needed)
+            post {
+                always {
+                    junit 'results.xml' // Publish JUnit results (requires JUnit plugin)
+                }
             }
         }
 
